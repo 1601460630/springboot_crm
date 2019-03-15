@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="jyx.crm.mapper.CustomerMapper" >
+  <resultMap id="BaseResultMap" type="jyx.crm.domain.Customer" >
+    <id column="cust_id" property="custId" jdbcType="INTEGER" />
+    <result column="cust_name" property="custName" jdbcType="VARCHAR" />
+    <result column="cust_industry" property="custIndustry" jdbcType="VARCHAR" />
+    <result column="cust_level" property="custLevel" jdbcType="VARCHAR" />
+    <result column="cust_linkman" property="custLinkman" jdbcType="VARCHAR" />
+    <result column="cust_linkman_mobile" property="custLinkmanMobile" jdbcType="VARCHAR" />
+    <result column="cust_phone" property="custPhone" jdbcType="VARCHAR" />
+    <result column="cust_mobile" property="custMobile" jdbcType="VARCHAR" />
+    <result column="cust_source" property="custSource" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    cust_id, cust_name, cust_industry, cust_level, cust_linkman, cust_linkman_mobile, 
+    cust_phone, cust_mobile, cust_source
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="jyx.crm.domain.CustomerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from customer
+    where cust_id = #{custId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from customer
+    where cust_id = #{custId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="jyx.crm.domain.CustomerExample" >
+    delete from customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="jyx.crm.domain.Customer" >
+    insert into customer (cust_id, cust_name, cust_industry, 
+      cust_level, cust_linkman, cust_linkman_mobile, 
+      cust_phone, cust_mobile, cust_source
+      )
+    values (#{custId,jdbcType=INTEGER}, #{custName,jdbcType=VARCHAR}, #{custIndustry,jdbcType=VARCHAR}, 
+      #{custLevel,jdbcType=VARCHAR}, #{custLinkman,jdbcType=VARCHAR}, #{custLinkmanMobile,jdbcType=VARCHAR}, 
+      #{custPhone,jdbcType=VARCHAR}, #{custMobile,jdbcType=VARCHAR}, #{custSource,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="jyx.crm.domain.Customer" >
+    insert into customer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="custName != null" >
+        cust_name,
+      </if>
+      <if test="custIndustry != null" >
+        cust_industry,
+      </if>
+      <if test="custLevel != null" >
+        cust_level,
+      </if>
+      <if test="custLinkman != null" >
+        cust_linkman,
+      </if>
+      <if test="custLinkmanMobile != null" >
+        cust_linkman_mobile,
+      </if>
+      <if test="custPhone != null" >
+        cust_phone,
+      </if>
+      <if test="custMobile != null" >
+        cust_mobile,
+      </if>
+      <if test="custSource != null" >
+        cust_source,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="custId != null" >
+        #{custId,jdbcType=INTEGER},
+      </if>
+      <if test="custName != null" >
+        #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="custIndustry != null" >
+        #{custIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="custLevel != null" >
+        #{custLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="custLinkman != null" >
+        #{custLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="custLinkmanMobile != null" >
+        #{custLinkmanMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="custPhone != null" >
+        #{custPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="custMobile != null" >
+        #{custMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="custSource != null" >
+        #{custSource,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="jyx.crm.domain.CustomerExample" resultType="java.lang.Integer" >
+    select count(*) from customer
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update customer
+    <set >
+      <if test="record.custId != null" >
+        cust_id = #{record.custId,jdbcType=INTEGER},
+      </if>
+      <if test="record.custName != null" >
+        cust_name = #{record.custName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custIndustry != null" >
+        cust_industry = #{record.custIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custLevel != null" >
+        cust_level = #{record.custLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custLinkman != null" >
+        cust_linkman = #{record.custLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custLinkmanMobile != null" >
+        cust_linkman_mobile = #{record.custLinkmanMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custPhone != null" >
+        cust_phone = #{record.custPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custMobile != null" >
+        cust_mobile = #{record.custMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custSource != null" >
+        cust_source = #{record.custSource,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update customer
+    set cust_id = #{record.custId,jdbcType=INTEGER},
+      cust_name = #{record.custName,jdbcType=VARCHAR},
+      cust_industry = #{record.custIndustry,jdbcType=VARCHAR},
+      cust_level = #{record.custLevel,jdbcType=VARCHAR},
+      cust_linkman = #{record.custLinkman,jdbcType=VARCHAR},
+      cust_linkman_mobile = #{record.custLinkmanMobile,jdbcType=VARCHAR},
+      cust_phone = #{record.custPhone,jdbcType=VARCHAR},
+      cust_mobile = #{record.custMobile,jdbcType=VARCHAR},
+      cust_source = #{record.custSource,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="jyx.crm.domain.Customer" >
+    update customer
+    <set >
+      <if test="custName != null" >
+        cust_name = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="custIndustry != null" >
+        cust_industry = #{custIndustry,jdbcType=VARCHAR},
+      </if>
+      <if test="custLevel != null" >
+        cust_level = #{custLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="custLinkman != null" >
+        cust_linkman = #{custLinkman,jdbcType=VARCHAR},
+      </if>
+      <if test="custLinkmanMobile != null" >
+        cust_linkman_mobile = #{custLinkmanMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="custPhone != null" >
+        cust_phone = #{custPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="custMobile != null" >
+        cust_mobile = #{custMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="custSource != null" >
+        cust_source = #{custSource,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cust_id = #{custId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="jyx.crm.domain.Customer" >
+    update customer
+    set cust_name = #{custName,jdbcType=VARCHAR},
+      cust_industry = #{custIndustry,jdbcType=VARCHAR},
+      cust_level = #{custLevel,jdbcType=VARCHAR},
+      cust_linkman = #{custLinkman,jdbcType=VARCHAR},
+      cust_linkman_mobile = #{custLinkmanMobile,jdbcType=VARCHAR},
+      cust_phone = #{custPhone,jdbcType=VARCHAR},
+      cust_mobile = #{custMobile,jdbcType=VARCHAR},
+      cust_source = #{custSource,jdbcType=VARCHAR}
+    where cust_id = #{custId,jdbcType=INTEGER}
+  </update>
+</mapper>
